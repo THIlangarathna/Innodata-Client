@@ -9,7 +9,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -22,7 +22,35 @@
 
 <body onload="Test1();"> 
 {{-- <body> --}}
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="">
+                {{ config('app.name', 'Laravel') }}
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav mr-auto">
+
+                </ul>
+
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ml-auto">
+                    <!-- Authentication Links -->
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="/Logout" v-pre>
+                                Logout <span class="caret"></span>
+                            </a>
+                        </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -56,6 +84,7 @@
         <div class="text-white" style="text-align:center">
             <a class="btn btn-primary" href="/Finish" role="button">Finish</a>
         </div>
+        <br><br>
     </div>
 
 </body>
@@ -116,10 +145,10 @@
         var y1 = y1;
         var x2 = x2/2;
         var y2 = y2/2;
-        document.getElementById('x1').value=x1;
-        document.getElementById('y1').value=y1;
-        document.getElementById('x2').value=x2;
-        document.getElementById('y2').value=y2;
+        document.getElementById('x1').value=parseInt(x1);
+        document.getElementById('y1').value=parseInt(y1);
+        document.getElementById('x2').value=parseInt(x2);
+        document.getElementById('y2').value=parseInt(y2);
 
         };
 
@@ -187,6 +216,7 @@
             storedRects.forEach(rect => rect.draw(ctx));
             ctx.strokeStyle = "red";
             rect.draw(ctx);
+
         }
 
         function mainLoop() {

@@ -12,12 +12,34 @@ class MainController extends Controller
         return view('Auth');
     }
 
+    //SERVER URL -> http://127.0.0.1:8000
+
     public function auth(Request $request)
     {
-        $access_token = $request['authtoken'];
-        session(['access_token' => $access_token]);
+        $validatedData = $request->validate([
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:8',
+        ]);
 
-        return redirect('/List');
+        $response = Http::withHeaders([
+            'accept' => 'application/json',
+        ])->post('http://127.0.0.1:8000/api/login', [
+            'email'=>$request['email'],
+            'password'=>$request['password']
+        ]);
+
+        if (isset($response['access_Token']))
+        {
+            $access_token = $response['access_Token'];
+            session(['access_token' => $access_token]);
+
+            return redirect('/List');
+        }
+        else
+        {
+            return view('Auth')->with('response',$response);
+        }
+        
     }
 
     public function list()
@@ -69,6 +91,19 @@ class MainController extends Controller
 
 
         return redirect('/List');
+    }
+
+    public function logout()
+    {
+        $access_token = session('access_token', 'default value');
+
+        $response = Http::withHeaders([
+            'accept' => 'application/json',
+            'authorization' => "Bearer $access_token"
+        ])->get('http://127.0.0.1:8000/api/logout');
+        
+        session()->forget(['access_token','list','list_id']);
+        return redirect('/Auth');
     }
 
 }

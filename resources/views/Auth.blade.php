@@ -24,7 +24,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -52,13 +52,23 @@
                                 @csrf
         
                                 <div class="form-group row">
-                                    <label for="authtoken" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="authtoken" type="text" class="form-control"  name="authtoken" required autocomplete="authtoken" autofocus>
+                                        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
         
                                     </div>
                                 </div>
+        
+                                <div class="form-group row">
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+        
+                                    <div class="col-md-6">
+                                        <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password">
+        
+                                    </div>
+                                </div>
+
         
                                 <div class="form-group row mb-0">
                                     <div class="col-md-8 offset-md-4">
@@ -67,6 +77,14 @@
                                         </button>
                                     </div>
                                 </div>
+                                <br>
+                                @if(isset($response))
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {{$response['message']}}
+                                        </ul>
+                                    </div>
+                                @endif
 
                             </form>
                         </div>

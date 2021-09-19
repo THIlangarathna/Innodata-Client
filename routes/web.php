@@ -25,13 +25,18 @@ Route::get('/Auth', [MainController::class, 'index']);
 Route::post('/Auth', [MainController::class, 'auth']);
 
 //view submission list
-Route::get('/List', [MainController::class, 'list']);
+Route::middleware('Auth')->get('/List', [MainController::class, 'list']);
+
+//ID pattern for {id} = '[0-9]+'
 
 //view inside a list
-Route::get('/ImageList/{id}', [MainController::class, 'imagelist']);
+Route::middleware('Auth')->get('/ImageList/{id}', [MainController::class, 'imagelist']);
 
 //view single image
-Route::get('/SingleImage/{id}', [MainController::class, 'singleimage']);
+Route::middleware('Auth')->get('/SingleImage/{id}', [MainController::class, 'singleimage']);
 
 //delete temp folder
-Route::get('/Finish', [MainController::class, 'finish']);
+Route::middleware('Auth')->get('/Finish', [MainController::class, 'finish']);
+
+//logout
+Route::middleware('Auth')->get('/Logout', [MainController::class, 'logout']);
